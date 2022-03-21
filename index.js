@@ -1,5 +1,7 @@
 require("dotenv").config();
 const express = require('express');
+const bodyParser = require("body-parser");
+const cors = require("cors");
 const app = express();
 const path = require('path');
 
@@ -13,7 +15,13 @@ db.authenticate()
         console.log("Error: " + err);
     })
 
-app.use(express.static(path.join(__dirname,"public")))
+app.use(cors());
+app.use(express.static(path.join(__dirname, "public")))
+
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
+app.use(bodyParser.raw());
+app.use(bodyParser.text());
 
 app.get("/", (req, res) => {
     res.sendStatus(200);
