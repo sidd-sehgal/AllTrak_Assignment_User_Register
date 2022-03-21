@@ -80,7 +80,7 @@ router.post("/user/create", function (req, res) {
 router.patch("/user/:id", function (req, res) {
     upload(req, res, async function (err) {
         if (err) {
-
+            res.send(err);
         } else {
             const id = req.params.id;
             let data = req.body;
@@ -95,9 +95,7 @@ router.patch("/user/:id", function (req, res) {
                     console.log(user.img);
                     let oldPath = user.img.split("/");
                     oldPath = oldPath[oldPath.length - 1];
-                    // console.log(oldPath);
-                    // oldPath = "public/" + oldPath.slice(oldPath.indexOf("uploads"));
-
+                    
                     oldPath = path.join("public", "uploads", oldPath)
                     fs.unlink(oldPath, function () {});
 
@@ -110,7 +108,6 @@ router.patch("/user/:id", function (req, res) {
                 user.save()
                     .then(user => {
                         console.log(user);
-
                         res.send("User Details Updated Successfully")
                     })
                     .catch(err => {
