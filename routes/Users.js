@@ -7,6 +7,7 @@ const multer = require('multer');
 const fs = require("fs");
 const path = require("path");
 
+
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, 'public/uploads')
@@ -31,7 +32,6 @@ const upload = multer(
             callback(null, true)
         },
     }).single("img");
-
 
 router.get("/users/", function (req, res) {
     User.findAll()
@@ -99,9 +99,7 @@ router.patch("/user/:id", function (req, res) {
                     // oldPath = "public/" + oldPath.slice(oldPath.indexOf("uploads"));
 
                     oldPath = path.join("public", "uploads", oldPath)
-                    fs.unlink(oldPath, function () {
-
-                    });
+                    fs.unlink(oldPath, function () {});
 
                     let img = file.path.replace("public", "").replace(/\\/g, "/");
                     img = process.env.URL + img;
